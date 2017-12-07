@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="GestureGis2.Dockpane1View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"    
+             xmlns:ui="clr-namespace:GestureGis2"
+             xmlns:extensions="clr-namespace:ArcGIS.Desktop.Extensions;assembly=ArcGIS.Desktop.Extensions"
+             xmlns:controls="clr-namespace:ArcGIS.Desktop.Framework.Controls;assembly=ArcGIS.Desktop.Framework"                       
+             mc:Ignorable="d" 
+             d:DesignHeight="226.087"
+             d:DataContext="{Binding Path=ui.Dockpane1ViewModel}" Width="326.087">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <extensions:DesignOnlyResourceDictionary Source="pack://application:,,,/ArcGIS.Desktop.Framework;component\Themes\Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" LastChildFill="true" KeyboardNavigation.TabNavigation="Local" Height="30" HorizontalAlignment="Right" Width="326">
+
+            <TextBlock Grid.Column="1" Text="{Binding Heading}" Style="{DynamicResource Esri_TextBlockDockPaneHeader}">
+                <TextBlock.ToolTip>
+                    <WrapPanel Orientation="Vertical" MaxWidth="300">
+                        <TextBlock Text="{Binding Heading}" TextWrapping="Wrap"/>
+                    </WrapPanel>
+                </TextBlock.ToolTip>
+      </TextBlock>
+        </DockPanel>
+        <Border BorderBrush="Black" ClipToBounds="true" BorderThickness="1" HorizontalAlignment="Left" Height="215" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="241">
+            <Canvas  Height="213"  Name="sketchPad"  MouseDown="sketchPad_MouseDown" MouseMove="sketchPad_MouseMove" >
+                <Canvas.Background>
+                    <SolidColorBrush Color="White" Opacity="0"/>
+                </Canvas.Background>
+            </Canvas>
+        </Border>
+
+        <Button Click="Button_Click" Content="Submit" HorizontalAlignment="Left" Height="43" Margin="99,265,0,-112" Grid.Row="1" VerticalAlignment="Top" Width="84"/>
+    </Grid>
+</UserControl>

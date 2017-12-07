@@ -1,0 +1,7 @@
+GestureGis2/obj/*
+GestureGis2/bin/*
+.vs/GestureGis2/v15/.suo
+.vs/GestureGis2/v15/Server/sqlite3/db.lock
+.vs/GestureGis2/v15/Server/sqlite3/storage.ide
+.vs/GestureGis2/v15/Server/sqlite3/storage.ide-shm
+.vs/GestureGis2/v15/Server/sqlite3/storage.ide-wal

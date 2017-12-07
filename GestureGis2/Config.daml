@@ -1,0 +1,61 @@
+﻿<ArcGIS defaultAssembly="GestureGis2.dll" defaultNamespace="GestureGis2" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///E:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+  <AddInInfo id="{7bcf4ba0-b542-4920-96cd-51fbbda8405e}" version="1.0" desktopVersion="2.0.8933">
+    <Name>GestureGis2</Name>
+    <Description>GestureGis2 description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>SHASHWAT</Author>
+    <Company>HP Inc.</Company>
+    <Date>11/26/2017 8:06:19 PM, 2017</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+  <modules>
+    <insertModule id="GestureGis2_Module" className="Module1" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="GestureGis2_Tab1" caption="New Tab">
+          <group refID="GestureGis2_Group1"/>
+        </tab>-->
+      </tabs>
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="GestureGis2_Group1" caption="Group 1" appearsOnAddInTab="true">
+          <!-- host controls within groups -->
+          <button refID="GestureGis2_Button1" size="large" />
+          <button refID="GestureGis2_Dockpane1_ShowButton" size="large" />
+          <button refID="GestureGis2_TrainingDock_ShowButton" size="large" />
+        </group>
+      </groups>
+      <controls>
+        <!-- add your controls here -->
+        <button id="GestureGis2_Button1" caption="Button 1" className="Button1" loadOnClick="true" smallImage="Images\GenericButtonBlue16.png" largeImage="Images\GenericButtonBlue32.png">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
+        </button>
+        <button id="GestureGis2_Dockpane1_ShowButton" caption="Show Dockpane 1" className="Dockpane1_ShowButton" loadOnClick="true" smallImage="Images\GenericButtonPurple16.png" largeImage="Images\GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+        <button id="GestureGis2_Dockpane1_MenuButton" caption="Burger Menu Button" className="Dockpane1_MenuButton" loadOnClick="true" smallImage="Images\GenericButtonPurple16.png" largeImage="Images\GenericButtonPurple32.png">
+          <tooltip heading="Burger Menu Button">ToolTip<disabledText /></tooltip>
+        </button>
+        <button id="GestureGis2_TrainingDock_ShowButton" caption="Show TrainingDock" className="TrainingDock_ShowButton" loadOnClick="true" smallImage="Images\GenericButtonPurple16.png" largeImage="Images\GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+      </controls>
+      <dockPanes>
+        <dockPane id="GestureGis2_Dockpane1" caption="Dockpane 1" className="Dockpane1ViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="Dockpane1View" />
+        </dockPane>
+        <dockPane id="GestureGis2_TrainingDock" caption="TrainingDock" className="TrainingDockViewModel" dock="group" dockWith="esri_core_contentsDockPane">
+          <content className="TrainingDockView" />
+        </dockPane>
+      </dockPanes>
+      <menus>
+        <menu id="GestureGis2_Dockpane1_Menu" caption="Options" contextMenu="true">
+          <button refID="GestureGis2_Dockpane1_MenuButton" />
+        </menu>
+      </menus>
+    </insertModule>
+  </modules>
+</ArcGIS>
