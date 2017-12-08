@@ -5,3 +5,6 @@ GestureGis2/bin/*
 .vs/GestureGis2/v15/Server/sqlite3/storage.ide
 .vs/GestureGis2/v15/Server/sqlite3/storage.ide-shm
 .vs/GestureGis2/v15/Server/sqlite3/storage.ide-wal
+GestureGis2/Featurefile.txt
+GestureGis2/Classfile.txt
+GestureGis2/Classfile.txt

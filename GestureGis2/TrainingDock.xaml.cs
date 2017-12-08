@@ -30,6 +30,7 @@ namespace GestureGis2
         List<List<Point>> gesturePoints = new List<List<Point>>();
         List<Point> gesture = new List<Point>();
         ArrayList classArray = new ArrayList();
+        string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         public TrainingDockView()
         {
             InitializeComponent();
@@ -67,27 +68,48 @@ namespace GestureGis2
         {
             //ToDo: Add error check if no sketch is drawn as an example
             if (gesture.Count > 0)
-            {
-                gesturePoints.Add(gesture);
-                CalculateAllFeatures(gesture, attrVal);
-                gesture = new List<Point>();
-                trainPad.Children.Clear();
-            }
-            
+                if (gesture.Count > 0 && gestureDict.Count > 0 && attrVal != "")
+                {
+                    gesturePoints.Add(gesture);
+                    CalculateAllFeatures(gesture, attrVal);
+                    gesture = new List<Point>();
+                    gestureDict[attrVal] = gesturePoints;
+                    trainPad.Children.Clear();
+                }
+                else
+                {
+                    if (attrVal == "")
+                        MessageBox.Show("Please add a new gesture first by providing an attribute value and clicking on the new gesture button");
+                    else
+                        MessageBox.Show("Please draw the example gesture on the sketch pad first.");
+                }
+
         }
 
         private void Button_AddNewGesture(object sender, RoutedEventArgs e)
         {
             attrVal= AttributeVal.Text;
             //ToDo: Add error check if no examples have been added to the new gesture
-            if (gesturePoints.Count > 0 && attrVal!="")
+            if (attrVal != "" && !gestureDict.ContainsKey(attrVal))
             {
-                //gestureSet.Add(gesturePoints);
-                gestureDict.Add(attrVal,gesturePoints);
-                //GestureSetCounter = gestureSet.Count;
+                gesture = new List<Point>();
                 gesturePoints = new List<List<Point>>();
+                gestureDict.Add(attrVal, gesturePoints);
                 trainPad.Children.Clear();
             }
+            else
+            {
+                if (attrVal == "")
+                    MessageBox.Show("Please add an attribute value in the text box that you want to identify your gesture with.");
+                else
+                    MessageBox.Show("This attribute is already associated with another gesture.");
+            }
+        }
+
+        private void Button_Clear(object sender, RoutedEventArgs e)
+        {
+            gesture = new List<Point>();
+            trainPad.Children.Clear();
         }
 
         private void CalculateAllFeatures(List<Point> sketch, String BuildingType)
@@ -185,33 +207,8 @@ namespace GestureGis2
             //F11 angle of bounding box
 
             //Create/append features and building type to a txt file
-            // Double[] arr = {F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11};
-            //List<Double> featurearray = new List<Double>();
-            //featurearray.Add(F1); featurearray.Add(F2); featurearray.Add(F3); featurearray.Add(F4);
-            //featurearray.Add(F5); featurearray.Add(F6); featurearray.Add(F7); featurearray.Add(F8);
-            //featurearray.Add(F9); featurearray.Add(F10); featurearray.Add(F11);//featurearray.Add(BuildingType);
-            /*if(!(classArray.Contains(BuildingType)))
-            {
-                classArray.Add(BuildingType);
-                string path_class = @"D:\final_version\Gesture-Gis-master\GestureGis2\Classfile.txt";
-                if (!File.Exists(path_class))
-                {
-                    var myFile = File.Create(path_class);
-                    myFile.Close();
-                    TextWriter tw = new StreamWriter(path_class);
-                    tw.Write(BuildingType+Environment.NewLine);
-                    tw.Close();
-                }
-                else if (File.Exists(path_class))
-                {
-                    using (var tw = new StreamWriter(path_class, true))
-                    {
-                        tw.Write(BuildingType+Environment.NewLine);
-                        tw.Close();
-                    }
-                }
-            }*/
-            string mypath = @"D:\final_version\Gesture-Gis-master\GestureGis2\Featurefile.txt";
+            
+            string mypath = @projectDirectory+"\\Featurefile.txt";
             string inp = "interpretation";
             //FileStream fs = null;
             if (!File.Exists(mypath))

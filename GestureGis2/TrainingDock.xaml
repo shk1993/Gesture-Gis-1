@@ -37,8 +37,9 @@
                 </Canvas.Background>
             </Canvas>
         </Border>
-        <Button Content="New Example" Click="Button_AddNewExample" HorizontalAlignment="Left" Margin="10,238,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="22"/>
-        <Button Content="New Gesture" Click="Button_AddNewGesture" HorizontalAlignment="Left" Margin="166,240,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
+        <Button Content="New Example" Click="Button_AddNewExample" HorizontalAlignment="Left" Margin="10,243,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="22"/>
+        <Button Content="New Gesture" Click="Button_AddNewGesture" HorizontalAlignment="Left" Margin="166,245,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
         <TextBox Name="AttributeVal"  HorizontalAlignment="Left" Height="20" Margin="166,220,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Clear" Click="Button_Clear" HorizontalAlignment="Left" Margin="10,220,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </UserControl>

@@ -30,6 +30,7 @@ namespace GestureGis2
         //this attributeIndex value is used to make sure that all the ids are unique
         int attributeIndex = 0;
         List<Point> gesture = new List<Point>();
+        string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         string PredictedClassbyWeka;
         public Dockpane1View()
         {
@@ -64,8 +65,19 @@ namespace GestureGis2
 
         }
 
+        private void ClearPad(object sender, RoutedEventArgs e)
+        {
+            sketchPad.Children.Clear();
+            gesture = new List<Point>();
+        }
+
         protected async void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (gesture.Count == 0 || gesture == null)
+            {
+                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("No gesture drawn");
+                return;
+            }
             CalculateAllFeatures(gesture, "Residential");
             gesture = new List<Point>();
             sketchPad.Children.Clear();
@@ -131,8 +143,8 @@ namespace GestureGis2
                         // we add values of ids to the selected features
                         for(int i = 0; i < inspList.Count; i++)
                         {
-                            if(inspList.ElementAt(i)["UID"]==null || (String)inspList.ElementAt(i)["UID"] == String.Empty)
-                            {
+                            //if(inspList.ElementAt(i)["UID"]==null )//|| (String)inspList.ElementAt(i)["UID"] == String.Empty)
+                            //{
                                 // putting a random string now, this should be replaced by the tag user puts in after the recognition part is done.
                                 inspList.ElementAt(i)["UID"] = PredictedClassbyWeka + attributeIndex++;
                                 var op = new EditOperation();
@@ -140,16 +152,11 @@ namespace GestureGis2
                                 op.SelectModifiedFeatures = true;
                                 op.SelectNewFeatures = false;
                                 op.Modify(inspList.ElementAt(i));
-                                op.Execute();
-                            }
+                                op.ExecuteAsync();
+                            
+                            //}
                             
                         }
-                       /* var att2 = insp.Select(a => a.FieldName == "UID");
-                        var att3 = insp.GroupBy(a => a.FieldName == "UID");
-                        var att4 = insp.Any(a => a.FieldName == "UID");
-                        var att5 = insp.Where(a => a.FieldName == "UID")*/
-                        //insp["UID"] = "newAtr";
-                        
                         
                     });
 
@@ -219,6 +226,7 @@ namespace GestureGis2
             }
         }
 
+#region Classification Code
         public void CSV2Arff()
         {
 
@@ -226,14 +234,14 @@ namespace GestureGis2
             weka.core.converters.CSVLoader loader = new weka.core.converters.CSVLoader();
             //weka.core.converters.TextDirectoryLoader loader = new weka.core.converters.TextDirectoryLoader();
             // C:/ Users / DELL / source / repos / WekafromCtest / WekafromCtest /
-            loader.setSource(new java.io.File("D:/final_version/Gesture-Gis-master/GestureGis2/ComparisonFeaturefile.txt"));
+            loader.setSource(new java.io.File(projectDirectory+"//ComparisonFeaturefile.txt"));
             weka.core.Instances data = loader.getDataSet();
 
             //save arff
             weka.core.converters.ArffSaver saver = new weka.core.converters.ArffSaver();
             saver.setInstances(data);
             //and save as arff file
-            saver.setFile(new java.io.File("D:/final_version/Gesture-Gis-master/GestureGis2/ComparisonFeaturefile.arff"));
+            saver.setFile(new java.io.File(projectDirectory+"//ComparisonFeaturefile.arff"));
             saver.writeBatch();
 
         }
@@ -243,7 +251,7 @@ namespace GestureGis2
             {
 
                 CSV2Arff();
-                java.io.FileReader arrfFile = new java.io.FileReader("D:/final_version/Gesture-Gis-master/GestureGis2/ComparisonFeaturefile.arff");
+                java.io.FileReader arrfFile = new java.io.FileReader(projectDirectory+"//ComparisonFeaturefile.arff");
                 weka.core.Instances insts = new weka.core.Instances(arrfFile);
                 //weka.core.Instances insts2 = new weka.core.Instances(new java.io.FileReader("D:/Gesture-Gis-master/GestureGis2/ComparisonFeaturefile.arff"));
                 insts.setClassIndex(insts.numAttributes() - 1);
@@ -410,8 +418,8 @@ namespace GestureGis2
             //featurearray.Add(F1); featurearray.Add(F2); featurearray.Add(F3); featurearray.Add(F4);
             //featurearray.Add(F5); featurearray.Add(F6); featurearray.Add(F7); featurearray.Add(F8);
             //featurearray.Add(F9); featurearray.Add(F10); featurearray.Add(F11);//featurearray.Add(BuildingType);
-            string path1 = @"D:\final_version\Gesture-Gis-master\GestureGis2\Featurefile.txt";
-            string path = @"D:\final_version\Gesture-Gis-master\GestureGis2\ComparisonFeaturefile.txt";
+            string path1 = @projectDirectory+"\\Featurefile.txt";
+            string path = @projectDirectory+"\\ComparisonFeaturefile.txt";
 
             string buildm = "Resdential";
             try
@@ -443,7 +451,9 @@ namespace GestureGis2
                 {
                     File.Delete(path);
                 }
-                string pathar = @"D:\final_version\Gesture-Gis-master\GestureGis2\ComparisonFeaturefile.arff";
+                //string startupPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                //string pathar = @"E:\semester 1\sketch recognition\Project\Final\source\GestureGisFinal\Gesture-Gis-1\GestureGis2\ComparisonFeaturefile.arff";
+                string pathar = projectDirectory + "\\ComparisonFeaturefile.arff";
                 if (File.Exists(pathar))
                 {
                     File.Delete(pathar);
@@ -459,5 +469,6 @@ namespace GestureGis2
 
 
         }
+#endregion
     }
 }

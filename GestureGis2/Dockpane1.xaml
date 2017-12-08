@@ -40,6 +40,7 @@
             </Canvas>
         </Border>
 
-        <Button Click="Button_Click" Content="Submit" HorizontalAlignment="Left" Height="43" Margin="99,265,0,-112" Grid.Row="1" VerticalAlignment="Top" Width="84"/>
+        <Button Click="Button_Click" Content="Submit" HorizontalAlignment="Left" Height="43" Margin="157,237,0,-84" Grid.Row="1" VerticalAlignment="Top" Width="84"/>
+        <Button Click="ClearPad"  Content="Clear" HorizontalAlignment="Left" Height="43" Margin="0,237,0,-84" Grid.Row="1" VerticalAlignment="Top" Width="84"/>
     </Grid>
 </UserControl>
